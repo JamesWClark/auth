@@ -15,18 +15,19 @@ namespace ADHelper {
 		
 		static void Main(string[] args) {
 
-			//string dn = "OU=2018,OU=Lightly Managed,OU=Users,OU=Student.Greenlease,DC=student,DC=rockhurst,DC=int";
+			string ou = "OU=2020,OU=Highly Managed,OU=Users,OU=Student.Greenlease,DC=student,DC=rockhurst,DC=int";
 
 			var username = ConfigurationManager.AppSettings["ldap_admin_username"];
 			var password = ConfigurationManager.AppSettings["ldap_admin_password"];
-			var file = ConfigurationManager.AppSettings["ldap_user_file"]; //this files burns the header
+			var file = ConfigurationManager.AppSettings["ldap_user_file"];
 
 			//batch create new users from csv, set email property, set password, enable, join hard-coded ou
-			Tasks.Task_BatchCreateUsers task = new Tasks.Task_BatchCreateUsers(file, true);
+			Tasks.Task_BatchCreateUsers task = new Tasks.Task_BatchCreateUsers(file, true, ou);
 			task.Run();
 
 			//ADClasses.AD_UsersCollection users = new ADClasses.AD_UsersCollection(file, true);
-			//Tasks.Task_GeneratePasswords task = new Tasks.Task_GeneratePasswords(users);
+			//Tasks.Task_GeneratePasswords task = new Tasks.Task_GeneratePasswords(users, 8);
+			//task.Run();
 		}
 	}
 }
